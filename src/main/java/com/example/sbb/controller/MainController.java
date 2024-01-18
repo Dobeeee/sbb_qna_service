@@ -5,6 +5,9 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class MainController {
+
+    private int increaseNo = -1;
+
     @RequestMapping("/sbb")
     @ResponseBody
     // 아래 함수의 리턴값을 그대로 브라우저에 표시
@@ -31,5 +34,23 @@ public class MainController {
                 <h1>입력된 숫자 : %d</h1>
                 <h1>page2 POST 방식입니다.</h1>
                 """.formatted(age);
+    }
+
+    @GetMapping("/plus")
+    @ResponseBody
+    public int showPlus(int a, int b) {
+        return a+b;
+    }
+    @GetMapping("/minus")
+    @ResponseBody
+    public int showMinus(int a, int b) {
+        return a-b;
+    }
+    @GetMapping("/increase")
+    @ResponseBody
+    public int showIncrease() {
+
+        increaseNo++;
+        return increaseNo;
     }
 }
