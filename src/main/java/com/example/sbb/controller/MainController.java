@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -130,16 +131,24 @@ public class MainController {
     @ResponseBody
     public String article(String title, String body) {
         int id =1;
-        Article article = new Article(id, title, body);
+        Article article = new Article(title, body);
 
-        return "%d번째 게시물이 작성되었습니다.".formatted(id);
+        return "%d번째 게시물이 작성되었습니다.".formatted(article.getId());
 
     }
 
     @AllArgsConstructor
     class Article {
+
+        private static int lastId=0;
+
+        @Getter
         private int id;
         private String title;
         private String body;
+
+        public Article(String title, String body) {
+            this(++lastId, title, body);
+        }
     }
 }
