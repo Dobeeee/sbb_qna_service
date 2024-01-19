@@ -5,10 +5,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -127,22 +131,59 @@ public class MainController {
         return "세션 %s의 값은 %s 입니다.".formatted(name, value);
     }
 
-    @GetMapping("/article")
+
+    private List<Article> articles = new ArrayList<>(
+            Arrays.asList(
+                    new Article("제목", "내용"),
+                    new Article("제목", "내용")
+            )
+    );
+
+
+    @GetMapping("/addArticle")
     @ResponseBody
     public String article(String title, String body) {
         int id =1;
         Article article = new Article(title, body);
+        articles.add(article);
 
         return "%d번째 게시물이 작성되었습니다.".formatted(article.getId());
 
     }
 
+    @GetMapping("/article/{id}")
+    @ResponseBody
+    public Article getArticle(@PathVariable int id) {
+        Article article = articles
+                .stream()
+                .filter(a -> a.getId() == id)
+                .findFirst().get();
+        return article;
+    }
+
+    @GetMapping("/modifyArticle/{id}")
+    @ResponseBody
+    public String modifyArticle(@PathVariable int id, String title, String body) {
+        Article article = articles
+                .stream()
+                .filter(a -> a.getId() == id)
+                .findFirst().get();
+
+        if(article == null) {
+            return "%d번의 게시물은 존재하지 않습니다.".formatted(id);
+        }
+        article.setTitle(title);
+        article.setBody(body);
+        return "%d번의 게시물을 수정하였습니다.".formatted(article.getId());
+    }
+
+
     @AllArgsConstructor
+    @Getter
+    @Setter
     class Article {
 
         private static int lastId=0;
-
-        @Getter
         private int id;
         private String title;
         private String body;
