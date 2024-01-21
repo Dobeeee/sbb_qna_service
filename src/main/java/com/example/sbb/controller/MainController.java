@@ -192,10 +192,32 @@ public class MainController {
         }
 
         articles.remove(article);
-        
+
         return "%d번의 게시물을 삭제하였습니다.".formatted(article.getId());
     }
 
+    // Old version
+    @GetMapping("/addPersonOnlyWay")
+    @ResponseBody
+    public Person addPersonOnlyWay(int id, int age, String name) {
+       Person p = new Person(id, age, name);
+       return p;
+    }
+
+    @GetMapping("/addPerson")
+    @ResponseBody
+    public Person addPerson(Person p) {
+        
+        return p;
+    }
+
+    @AllArgsConstructor
+    @Getter
+    class Person {
+        private int id;
+        private int age;
+        private String name;
+    }
 
     @AllArgsConstructor
     @Getter
