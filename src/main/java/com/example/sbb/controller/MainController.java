@@ -157,7 +157,9 @@ public class MainController {
         Article article = articles
                 .stream()
                 .filter(a -> a.getId() == id)
-                .findFirst().get();
+                .findFirst().orElse(null);
+
+
         return article;
     }
 
@@ -167,7 +169,7 @@ public class MainController {
         Article article = articles
                 .stream()
                 .filter(a -> a.getId() == id)
-                .findFirst().get();
+                .findFirst().orElse(null);
 
         if(article == null) {
             return "%d번의 게시물은 존재하지 않습니다.".formatted(id);
