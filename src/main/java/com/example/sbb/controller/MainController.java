@@ -213,26 +213,27 @@ public class MainController {
 
 
 
-    @AllArgsConstructor
-    @Getter
-    class Person {
-        private int id;
-        private int age;
-        private String name;
-    }
+}
 
-    @AllArgsConstructor
-    @Getter
-    @Setter
-    class Article {
+@AllArgsConstructor
+@Getter
+class Person {
+    private int id;
+    private int age;
+    private String name;
+}
 
-        private static int lastId=0;
-        private int id;
-        private String title;
-        private String body;
+@AllArgsConstructor
+@Getter
+@Setter
+class Article {
 
-        public Article(String title, String body) {
-            this(++lastId, title, body);
-        }
+    private static int lastId=0;
+    private int id;
+    private String title;
+    private String body;
+
+    public Article(String title, String body) {
+        this(++lastId, title, body);
     }
 }
