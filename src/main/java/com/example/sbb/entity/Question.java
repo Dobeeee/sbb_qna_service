@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data // Getter , Setter 똑같다.
 @Entity //Question 클래스는 엔티티 클래스이다.
@@ -20,4 +21,7 @@ public class Question {
     private String content;
 
     private LocalDateTime createDate;
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+    private List<Answer> answerList;
 }
