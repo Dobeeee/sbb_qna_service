@@ -8,7 +8,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
@@ -57,5 +59,14 @@ class SbbApplicationTests {
 		List<Question> qList = questionRepository.findBySubjectLike("ssb%");
 		Question q = qList.get(0);
 		assertEquals("ssb가 무엇인가요?", q.getSubject());
+	}
+
+	@Test
+	void testJpa6() {
+		Optional<Question> oq = questionRepository.findById(1);
+		assertThat(oq.isPresent());
+		Question q = oq.get();
+		q.setSubject("수정된 제목");
+		questionRepository.save(q);
 	}
 }
