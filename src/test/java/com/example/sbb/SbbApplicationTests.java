@@ -80,4 +80,10 @@ class SbbApplicationTests {
 		questionRepository.delete(q);
 		assertEquals(1, questionRepository.count());
 	}
+
+	@Test
+	void truncateTable() {
+		questionRepository.foreignOff();
+		questionRepository.truncateQuestion();
+	}
 }
